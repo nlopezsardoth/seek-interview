@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/packages/seek_authentication/melos_seek_authentication.iml" filepath="$PROJECT_DIR$/packages/seek_authentication/melos_seek_authentication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/seek_app/melos_seek_interview.iml" filepath="$PROJECT_DIR$/seek_app/melos_seek_interview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/seek_qr/melos_seek_qr.iml" filepath="$PROJECT_DIR$/packages/seek_qr/melos_seek_qr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/seek_secure_store/melos_seek_secure_store.iml" filepath="$PROJECT_DIR$/packages/seek_secure_store/melos_seek_secure_store.iml" />
+      <module fileurl="file://$PROJECT_DIR$/packages/seek_shared/melos_seek_shared.iml" filepath="$PROJECT_DIR$/packages/seek_shared/melos_seek_shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/melos_seek_app.iml" filepath="$PROJECT_DIR$/melos_seek_app.iml" />
+    </modules>
+  </component>
+</project>

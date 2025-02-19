@@ -1,4 +1,4 @@
-name: seek_interview
+name: router_module
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -28,14 +28,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  auth_module:
+    path: ../auth_module
+  auto_route: 8.3.0
   flutter:
     sdk: flutter
-  router_module:
-    path: ../modules/router_module
-  shared_module:
-    path: ../modules/shared_module
+  get_it: ^8.0.3
 
 dev_dependencies:
+  auto_route_generator: 8.1.0
+  build_runner: 2.4.14
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
