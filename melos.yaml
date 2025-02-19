@@ -1,0 +1,9 @@
+name: seek_app
+
+packages:
+  - seek_app
+  - packages/*
+
+scripts:
+  analyze:
+    exec: dart analyze .
