@@ -1,0 +1,12 @@
+# melos_managed_dependency_overrides: auth_module,home_module,router_module,seek_secure_store,shared_module
+dependency_overrides:
+  auth_module:
+    path: ../modules/auth_module
+  home_module:
+    path: ../modules/home_module
+  router_module:
+    path: ../modules/router_module
+  seek_secure_store:
+    path: ../packages/seek_secure_store
+  shared_module:
+    path: ../modules/shared_module

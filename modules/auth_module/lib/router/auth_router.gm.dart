@@ -8,8 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auth_module/features/login/presentation/screens/login_screen.dart'
-    as _i1;
+import 'package:auth_module/presentation/screens/login_screen.dart' as _i1;
 import 'package:auto_route/auto_route.dart' as _i2;
 
 abstract class $AuthRouter extends _i2.AutoRouterModule {

@@ -3,6 +3,7 @@ name: seek_app
 packages:
   - seek_app
   - packages/*
+  - modules/*
 
 scripts:
   analyze:
