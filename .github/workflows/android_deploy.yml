@@ -29,13 +29,13 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
       - name: Install Fastlane Firebase App Distribution plugin
-        working-directory: android
+        working-directory: seek_app/android
         run: fastlane add_plugin firebase_app_distribution
       - name: Configure Google Application Credentials
         run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcp-key.json
 
       - name: Run Fastlane for Android
-        working-directory: android
+        working-directory: seek_app/android
         run: fastlane distribute
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
