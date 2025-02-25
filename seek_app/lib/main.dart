@@ -15,10 +15,14 @@ import 'package:shared_module/config/shared_locator.dart';
 import 'package:shared_module/l10n/shared_localizations.dart';
 import 'package:shared_module/themes/theme.dart';
 import 'package:shared_module/ui_utils/overlay/loading_overlay_content.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 const _appName = 'Seek app';
 
 Future<void> runCore(Flavor environment) async {
+  WidgetsFlutterBinding.ensureInitialized();
   Environment.setUpEnv(environment);
   await _initLocators();
 
@@ -30,6 +34,12 @@ Future<void> _initLocators() async {
   await initRouterLocator();
   await initAuthLocator();
   await initHomeLocator();
+}
+
+Future<void> _initFirebase() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
 }
 
 class _SeekApp extends StatelessWidget {

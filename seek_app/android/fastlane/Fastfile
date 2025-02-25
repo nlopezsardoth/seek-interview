@@ -1,0 +1,18 @@
+platform :android do
+  desc "Android deply script"
+  gradle(
+      task: 'assemble',
+      build_type: 'Release'
+      flags: '--no-signing-config'
+  )
+  lane :android_beta_app do
+      firebase_app_distribution(
+          service_credentials_json_data: ENV['GOOGLE_APPLICATION_CREDENTIALS']
+          app: "1:1015820849617:android:ab5598680a5634882c90f07",
+          groups: "seek-testers",
+          release_notes: "App for seek interview",
+          firebase_cli_path: "/usr/local/bin/firebase",
+          apk_path: "../build/app/outputs/apk/release/app-release.apk"
+      )
+  end
+end

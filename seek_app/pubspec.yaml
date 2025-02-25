@@ -30,6 +30,7 @@ environment:
 dependencies:
   auth_module:
     path: ../modules/auth_module
+  firebase_core: ^3.4.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
@@ -42,6 +43,7 @@ dependencies:
     path: ../modules/shared_module
 
 dev_dependencies:
+  change_app_package_name: ^1.4.0
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter

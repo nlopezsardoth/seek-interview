@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1015820849617",
+    "project_id": "seek-qr",
+    "storage_bucket": "seek-qr.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015820849617:android:f66236959dd285ae2c90f0",
+        "android_client_info": {
+          "package_name": "com.example.seek_interview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5mNDSc1cScEsnuPdqZemYMY6Tr3JbPIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015820849617:android:ab5598680a5634882c90f0",
+        "android_client_info": {
+          "package_name": "com.seek.interview.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5mNDSc1cScEsnuPdqZemYMY6Tr3JbPIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
