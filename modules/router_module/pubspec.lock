@@ -688,6 +688,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  seek_biometrics:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/seek_biometrics"
+      relative: true
+    source: path
+    version: "0.0.1"
+  seek_qr:
+    dependency: "direct overridden"
+    description:
+      path: "../../packages/seek_qr"
+      relative: true
+    source: path
+    version: "0.0.1"
   seek_secure_store:
     dependency: "direct overridden"
     description:

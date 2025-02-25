@@ -1,5 +1,6 @@
-import 'package:auth_module/data/datasources/user_local_datasource.dart';
-import 'package:auth_module/data/datasources/user_local_datasource_impl.dart';
+import 'package:auth_module/data/datasources/seek_biometrics_datasource.dart';
+import 'package:auth_module/data/datasources/seek_biometrics_datasource_impl.dart';
+import 'package:shared_module/config/shared_locator.dart';
 import 'package:auth_module/data/repositories/biometric_auth_repository_impl.dart';
 import 'package:auth_module/data/repositories/login_repository_impl.dart';
 import 'package:auth_module/domain/repositories/biometric_auth_repository.dart';
@@ -9,7 +10,8 @@ import 'package:auth_module/presentation/blocs/auth/auth_bloc.dart';
 import 'package:auth_module/presentation/blocs/login/login_bloc.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:seek_secure_store/seek_secure_store.dart';
+import 'package:seek_biometrics/seek_biometrics.dart';
+import 'package:shared_module/features/storage/data/datasources/seek_storage_datasource.dart';
 
 final authLocator = GetIt.instance;
 
@@ -19,12 +21,13 @@ Future<void> initAuthLocator() async {
 
 Future<void> _initAuthDependencies() async {
   authLocator
-    ..registerSingleton<UserLocalDatasource>(
-      UserLocalDatasourceImpl(storage: SeekStorage()),
+
+    ..registerSingleton<SeekBiometricsDatasource>(
+      SeekBiometricsDatasourceImpl(seekBiometrics: SeekBiometrics()),
     )
     ..registerLazySingleton<LoginRepository>(
       () => LoginRepositoryImpl(
-        localDatasource: authLocator<UserLocalDatasource>(),
+        localDatasource: sharedLocator<SeekStorageDatasource>(),
       ),
     )
     ..registerLazySingleton<GetUserUseCase>(
@@ -40,7 +43,9 @@ Future<void> _initAuthDependencies() async {
       () => ValidatePinUseCase(authLocator<LoginRepository>()),
     )
     ..registerLazySingleton<BiometricAuthRepository>(
-      () => BiometricAuthRepositoryImpl(),
+      () => BiometricAuthRepositoryImpl(
+        biometricDataSource: authLocator<SeekBiometricsDatasource>(),
+      ),
     )
     ..registerLazySingleton<BiometricAuthUseCase>(
       () => BiometricAuthUseCase(authLocator<BiometricAuthRepository>()),
@@ -49,9 +54,7 @@ Future<void> _initAuthDependencies() async {
       () => CheckBiometricUseCase(authLocator<BiometricAuthRepository>()),
     )
     ..registerLazySingleton<AuthBloc>(
-      () => AuthBloc(
-        loginUser: authLocator<LogInUseCase>(),
-      ),
+      () => AuthBloc(loginUser: authLocator<LogInUseCase>()),
     )
     ..registerLazySingleton<LoginBloc>(
       () => LoginBloc(
@@ -62,6 +65,5 @@ Future<void> _initAuthDependencies() async {
         checkBiometric: authLocator<CheckBiometricUseCase>(),
         authBloc: authLocator<AuthBloc>(),
       )..add(LoginCheckStatus()),
-    
     );
 }

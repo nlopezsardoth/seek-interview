@@ -1,79 +1,94 @@
 package com.example.seek_qr
 
+import QRScanResult
+import QRScannerApi
+
 import android.app.Activity
-import android.content.Context
-import com.example.seek_qr.pigeons.QRScannerApi
-import com.example.seek_qr.pigeons.QRScanResult
-import com.google.mlkit.common.MlKitException
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.codescanner.*
+import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.journeyapps.barcodescanner.CaptureActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import android.util.Log
+import kotlin.Result
 
-/** SeekQRPlugin */
+/** SeekQrPlugin */
 class SeekQrPlugin : FlutterPlugin, QRScannerApi, ActivityAware {
+
   private var activity: Activity? = null
-  private lateinit var context: Context
-  private lateinit var scanner: GmsBarcodeScanner
+  private var resultCallback: ((Result<QRScanResult>) -> Unit)? = null
+
+  // ActivityResultLauncher for handling the QR scan result
+  private lateinit var qrScanLauncher: androidx.activity.result.ActivityResultLauncher<Intent>
 
   override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     QRScannerApi.setUp(binding.binaryMessenger, this)
-    context = binding.applicationContext
-    initializeScanner()
-
-    preloadBarcodeUI() // Trigger download of barcode scanning UI at startup
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     QRScannerApi.setUp(binding.binaryMessenger, null)
   }
 
-  private fun initializeScanner() {
-    val options = GmsBarcodeScannerOptions.Builder()
-      .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-      .build()
-    scanner = GmsBarcodeScanning.getClient(context, options)
-    scanner.startScan()
-      .addOnFailureListener { exception ->
-        if (exception is MlKitException) {
-          Log.e("SeekQrPlugin", "Barcode UI download failed: ${exception.localizedMessage}")
+  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+    activity = binding.activity
+
+    // Initialize the ActivityResultLauncher
+    val fragmentActivity = activity as? FragmentActivity
+    if (fragmentActivity != null) {
+
+      qrScanLauncher = fragmentActivity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val data = result.data
+        val resultCode = result.resultCode
+
+        val scanResult = IntentIntegrator.parseActivityResult(IntentIntegrator.REQUEST_CODE, resultCode, data)
+        if (scanResult != null) {
+          if (scanResult.contents == null) {
+            // Scan was cancelled
+            resultCallback?.invoke(Result.success(QRScanResult(code = null, errorMessage = "Scan cancelled")))
+          } else {
+            // Scan was successful
+            resultCallback?.invoke(Result.success(QRScanResult(code = scanResult.contents, errorMessage = null)))
+          }
+        } else {
+          // Scan failed
+          resultCallback?.invoke(Result.success(QRScanResult(code = null, errorMessage = "Scan failed")))
         }
       }
+    }
   }
 
   override fun scanQRCode(callback: (Result<QRScanResult>) -> Unit) {
-    scanner.startScan()
-      .addOnSuccessListener { qrcode ->
-        callback(Result.success(QRScanResult(code = qrcode.rawValue, errorMessage = null)))
-      }
-      .addOnCanceledListener {
-        callback(Result.success(QRScanResult(code = null, errorMessage = "Scan canceled")))
-      }
-      .addOnFailureListener { exception ->
-        callback(Result.success(QRScanResult(code = null, errorMessage = exception.localizedMessage)))
-      }
+    val fragmentActivity = activity as? FragmentActivity
+    if (fragmentActivity == null) {
+      callback(Result.success(QRScanResult(code = null, errorMessage = "Activity is not a FragmentActivity")))
+      return
+    }
+
+    resultCallback = callback
+
+    // Initialize IntentIntegrator
+    val integrator = IntentIntegrator(fragmentActivity)
+    integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
+    integrator.setPrompt("Escanea un QR")
+    integrator.setCameraId(0)
+    integrator.setBarcodeImageEnabled(false)
+    integrator.setBeepEnabled(true)
+    integrator.captureActivity = com.example.seek_qr.CustomScannerActivity::class.java
+
+
+    // Launch the QR scanner
+    qrScanLauncher.launch(integrator.createScanIntent())
   }
 
-  private fun preloadBarcodeUI() {
-    val options = GmsBarcodeScannerOptions.Builder()
-      .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-      .build()
 
-    val preloadScanner = GmsBarcodeScanning.getClient(context, options)
-
-    preloadScanner.startScan()
-      .addOnSuccessListener {
-        Log.d("SeekQrPlugin", "Barcode UI is ready")
-      }
-      .addOnFailureListener { exception ->
-        Log.e("SeekQrPlugin", "Barcode UI preload failed: ${exception.localizedMessage}")
-      }
+  class CustomScannerActivity : CaptureActivity() {
+    // This activity will use the custom layout defined in res/layout/custom_scanner_layout.xml
   }
 
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-    activity = binding.activity
+  override fun onDetachedFromActivity() {
+    activity = null
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
@@ -82,9 +97,5 @@ class SeekQrPlugin : FlutterPlugin, QRScannerApi, ActivityAware {
 
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
     activity = binding.activity
-  }
-
-  override fun onDetachedFromActivity() {
-    activity = null
   }
 }

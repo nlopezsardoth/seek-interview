@@ -39,11 +39,14 @@ Add **camera permissions** inside `<manifest>`:
 Ensure the **activity** can handle camera access:
 
 ```xml
-<application>
-    <activity
-        android:name=".QRScannerActivity"
-        android:exported="false"/>
+<application ...>
+  ...
+  <meta-data
+      android:name="com.google.mlkit.vision.DEPENDENCIES"
+      android:value="barcode_ui"/>
+  ...
 </application>
+
 ```
 
 ### 📌 iOS

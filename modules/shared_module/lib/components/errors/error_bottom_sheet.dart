@@ -1,4 +1,3 @@
-import 'package:auth_module/l10n/auth_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:router_module/router/seek_router.dart';
 import 'package:router_module/router/config/router_locator.dart';
@@ -10,6 +9,7 @@ enum ErrorType {
   validatedBiometricError,
   updatedBiometricError,
   enableBiometricSettingsError,
+  qrScannerError,
 }
 
 class ErrorBottomSheet {
@@ -32,26 +32,22 @@ class ErrorBottomSheet {
       case ErrorType.validatedBiometricError:
         iconData = Icons.no_encryption_gmailerrorred_rounded;
         title = context.l10nAuth.error_biometric_modal_error_title;
-        description =
-            AuthLocalizations.of(
-              context,
-            )!.error_biometric_modal_error_description;
+        description = context.l10nAuth.error_biometric_modal_error_description;
         break;
       case ErrorType.enableBiometricSettingsError:
         iconData = Icons.error_outline;
         title = context.l10nAuth.error_biometric_modal_info_title;
-        description =
-            AuthLocalizations.of(
-              context,
-            )!.error_biometric_modal_info_description;
+        description = context.l10nAuth.error_biometric_modal_info_description;
       case ErrorType.updatedBiometricError:
         iconData = Icons.error_outline;
         title = context.l10nAuth.error_biometric_modal_updated_title;
         description =
-            AuthLocalizations.of(
-              context,
-            )!.error_biometric_modal_updated_description;
+            context.l10nAuth.error_biometric_modal_updated_description;
         break;
+      case ErrorType.qrScannerError:
+        iconData = Icons.qr_code_2_outlined;
+        title = context.l10nHome.error_qr_modal_info_title;
+        description = context.l10nHome.error_qr_modal_info_description;
     }
 
     _showModalBottomSheet(
@@ -149,9 +145,7 @@ class ErrorBottomSheet {
     );
   }
 
-  static Widget _buildCloseButton(
-    VoidCallback? callback,
-  ) {
+  static Widget _buildCloseButton(VoidCallback? callback) {
     return Expanded(
       child: Align(
         alignment: Alignment.topRight,
@@ -172,11 +166,11 @@ class ErrorBottomSheet {
   }
 
   static Text _buildErrorTitle(BuildContext context, String title) {
-    return Text(title, style: Theme.of(context).textTheme.titleMedium);
+    return Text(title, style: context.theme.textTheme.titleMedium);
   }
 
   static Text _buildErrorDescription(String description) {
-    return Text(description, textAlign: TextAlign.justify,);
+    return Text(description, textAlign: TextAlign.justify);
   }
 
   static TextButton _buildErrorButton(
@@ -186,7 +180,7 @@ class ErrorBottomSheet {
     return TextButton(
       child: Text(
         context.l10nShared.understood_button_text,
-        style: Theme.of(context).textTheme.labelLarge,
+        style: context.theme.textTheme.labelLarge,
       ),
       onPressed:
           () =>

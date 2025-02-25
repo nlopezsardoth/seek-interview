@@ -33,6 +33,9 @@ class AuthLocalizationsEs extends AuthLocalizations {
   String get login_confirm_pin_dont_match_message => 'El PIN no coincide, inténtalo nuevamente.';
 
   @override
+  String get login_try_with_pin_button_label => 'Trata con PIN';
+
+  @override
   String get biometric_auth_reason_ios => '¿Deseas permitir que Seek use tu huella o rostro?';
 
   @override
@@ -43,6 +46,9 @@ class AuthLocalizationsEs extends AuthLocalizations {
 
   @override
   String get biometric_auth_android_sign_in_title => 'Ingresa rápido y seguro a tu cuenta.';
+
+  @override
+  String get biometric_auth_try_again_button_label => 'Trata de nuevo';
 
   @override
   String get biometric_auth_android_biometric_hint => 'Coloca tu huella en el sensor.';

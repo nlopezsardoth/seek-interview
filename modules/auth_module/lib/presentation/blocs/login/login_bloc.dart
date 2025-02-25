@@ -1,8 +1,12 @@
 import 'package:auth_module/data/models/pin.dart';
+import 'package:auth_module/domain/entities/biometric_auth_parameters.dart';
+import 'package:auth_module/domain/entities/biometric_auth_response.dart';
+import 'package:auth_module/domain/entities/user.dart';
 import 'package:auth_module/domain/usecases/use_cases.dart';
 import 'package:auth_module/presentation/blocs/auth/auth_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:formz/formz.dart';
 import 'package:router_module/router/config/router_locator.dart';
 import 'package:router_module/router/seek_router.dart';
@@ -41,6 +45,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>
     on<LoginWithPin>(_onLoginWithPin);
     on<SetupNewPin>(_onSetupNewPin);
     on<PinChanged>(_onPinChanged);
+    on<GoToLoginWithPin>(_onGotoLoginFlow);
   }
 
   /// Determines the correct login flow
@@ -58,7 +63,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>
         emit(state.copyWith(flow: LoginFlow.setNewPin));
       },
       (user) async {
-        if (user == null) {
+        if (user == null || user == User.empty) {
           loadingStatus.end();
           emit(state.copyWith(flow: LoginFlow.setNewPin));
         } else {
@@ -139,8 +144,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>
       },
       (succes) async {
         if (state.canUseBiometrics) {
+          loadingStatus.end();
+          _authBloc.add(
+            UpdateUserState(User.empty.copyWith(pin: state.pin.value)),
+          );
           emit(state.copyWith(flow: LoginFlow.requireBiometric));
         } else {
+          loadingStatus.end();
           _authBloc.add(
             LogInRequested(
               _authBloc.state.user.copyWith(
@@ -157,22 +167,47 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>
   Future<void> _onLoginWithBiometrics(
     LoginWithBiometrics event,
     Emitter<LoginState> emit,
-  ) async {}
-
-  Future<bool> _checkBiometrics() async {
-    bool canAuth = false;
-    final canUseBiometricsResponse = await _checkBiometric(null);
-    canUseBiometricsResponse.fold(
+  ) async {
+    loadingStatus.begin();
+    final authResponse = await _biometricAuth(event.biometricParameters);
+    authResponse.fold(
       (failure) {
-        errorBottomSheetStatus.postBiometricSettingsError(() async {
+        // Show error bottom sheet if biometric authentication fails
+        loadingStatus.end();
+        errorBottomSheetStatus.postBiometricError(() {
           routerLocator<SeekRouter>().pop();
         });
-        canAuth = false;
       },
-      (response) async {
-        canAuth = response;
+      (authResult) {
+        if (authResult == BioAuthResult.success) {
+          loadingStatus.end();
+          _authBloc.add(LogInRequested(_authBloc.state.user.copyWith()));
+        } else {
+          loadingStatus.end();
+          // Handle authentication failure if needed
+          errorBottomSheetStatus.postBiometricError(() {
+            routerLocator<SeekRouter>().pop();
+          });
+        }
       },
     );
-    return canAuth;
+  }
+
+  Future<bool> _checkBiometrics() async {
+    final canUseBiometricsResponse = await _checkBiometric(null);
+
+    return canUseBiometricsResponse.fold((failure) {
+      errorBottomSheetStatus.postBiometricSettingsError(() {
+        routerLocator<SeekRouter>().pop();
+      });
+      return false;
+    }, (response) => response);
+  }
+
+  Future<void> _onGotoLoginFlow(
+    GoToLoginWithPin event,
+    Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(flow: LoginFlow.requirePin));
   }
 }

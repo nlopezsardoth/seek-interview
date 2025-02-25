@@ -110,6 +110,48 @@ abstract class SharedLocalizations {
   /// In es, this message translates to:
   /// **'Entendido'**
   String get understood_button_text;
+
+  /// Text for recent events
+  ///
+  /// In es, this message translates to:
+  /// **'Justo ahora'**
+  String get just_now;
+
+  /// Text for minutes ago
+  ///
+  /// In es, this message translates to:
+  /// **'{minutes, plural, one {Hace 1 minuto} other {Hace {minutes} minutos}}'**
+  String minutes_ago(int minutes);
+
+  /// Text for hours ago
+  ///
+  /// In es, this message translates to:
+  /// **'{hours, plural, one {Hace 1 hora} other {Hace {hours} horas}}'**
+  String hours_ago(int hours);
+
+  /// Text for yesterday
+  ///
+  /// In es, this message translates to:
+  /// **'Ayer'**
+  String get yesterday;
+
+  /// Weekday name
+  ///
+  /// In es, this message translates to:
+  /// **'{weekday}'**
+  String weekday(String weekday);
+
+  /// Date format for day and month
+  ///
+  /// In es, this message translates to:
+  /// **'{day} de {month}'**
+  String day_month(int day, String month);
+
+  /// Date format for full date
+  ///
+  /// In es, this message translates to:
+  /// **'{day} de {month} de {year}'**
+  String day_month_year(int day, String month, int year);
 }
 
 class _SharedLocalizationsDelegate extends LocalizationsDelegate<SharedLocalizations> {

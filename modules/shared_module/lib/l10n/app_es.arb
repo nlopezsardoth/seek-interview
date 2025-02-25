@@ -1,5 +1,78 @@
 {
   "something_went_wrong_title": "Algo salió mal",
   "try_again_later_description": "Inténtalo más tarde.",
-  "understood_button_text": "Entendido"
+  "understood_button_text": "Entendido",
+
+  "just_now": "Justo ahora",
+  "minutes_ago": "{minutes, plural, one {Hace 1 minuto} other {Hace {minutes} minutos}}",
+  "hours_ago": "{hours, plural, one {Hace 1 hora} other {Hace {hours} horas}}",
+  "yesterday": "Ayer",
+  "weekday": "{weekday}",
+  "day_month": "{day} de {month}",
+  "day_month_year": "{day} de {month} de {year}",
+  
+  "@just_now": {
+    "description": "Text for recent events"
+  },
+  "@minutes_ago": {
+    "description": "Text for minutes ago",
+    "placeholders": {
+      "minutes": {
+        "type": "int",
+        "description": "Number of minutes"
+      }
+    }
+  },
+  "@hours_ago": {
+    "description": "Text for hours ago",
+    "placeholders": {
+      "hours": {
+        "type": "int",
+        "description": "Number of hours"
+      }
+    }
+  },
+  "@yesterday": {
+    "description": "Text for yesterday"
+  },
+  "@weekday": {
+    "description": "Weekday name",
+    "placeholders": {
+      "weekday": {
+        "type": "String",
+        "description": "The name of the weekday"
+      }
+    }
+  },
+  "@day_month": {
+    "description": "Date format for day and month",
+    "placeholders": {
+      "day": {
+        "type": "int",
+        "description": "The day of the month"
+      },
+      "month": {
+        "type": "String",
+        "description": "The name of the month"
+      }
+    }
+  },
+  "@day_month_year": {
+    "description": "Date format for full date",
+    "placeholders": {
+      "day": {
+        "type": "int",
+        "description": "The day of the month"
+      },
+      "month": {
+        "type": "String",
+        "description": "The name of the month"
+      },
+      "year": {
+        "type": "int",
+        "description": "The year"
+      }
+    }
+  }
 }
+

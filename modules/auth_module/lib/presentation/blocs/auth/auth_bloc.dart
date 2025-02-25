@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:auth_module/domain/entities/user.dart';
 import 'package:auth_module/domain/usecases/use_cases.dart';
 import 'package:bloc/bloc.dart';
@@ -13,13 +14,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
   final LogInUseCase _loginUser;
 
   AuthBloc({required LogInUseCase loginUser})
-    : 
-      _loginUser = loginUser,
+    : _loginUser = loginUser,
       super(const AuthState.unknown()) {
     loadingStatus.setIsInitialized(true);
     on<LogInRequested>(_onLogInRequested);
+    on<UpdateUserState>(_onUpdateUserState);
   }
-
 
 
   Future<void> _onLogInRequested(
@@ -31,14 +31,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
     logInResponse.fold(
       (failure) {
         loadingStatus.end();
-        emit(AuthState.unauthenticated());
+        emit(AuthState.unauthenticated(event.user));
         errorBottomSheetStatus.postSomethingWentWrongError();
       },
       (success) {
         loadingStatus.end();
         emit(AuthState.authenticated(event.user));
-        //routerLocator<SeekRouter>().pop(); //Todo go to QR
       },
     );
+  }
+
+  FutureOr<void> _onUpdateUserState(UpdateUserState event, Emitter<AuthState> emit) {
+    emit(AuthState.unauthenticated(event.user));
   }
 }

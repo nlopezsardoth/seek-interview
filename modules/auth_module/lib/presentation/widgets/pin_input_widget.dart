@@ -3,6 +3,7 @@ import 'package:auth_module/l10n/auth_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:formz/formz.dart';
+import 'package:shared_module/utils/extensions/context_extensions.dart';
 
 class PinInputField extends StatelessWidget {
   final String? label;
@@ -25,7 +26,7 @@ class PinInputField extends StatelessWidget {
         if (label != null)
           SizedBox(
             width: 250,
-            child: Text(label!, style: Theme.of(context).textTheme.bodyMedium),
+            child: Text(label!, style: context.theme.textTheme.bodyMedium),
           ),
         SizedBox(height: 12),
         Column(
@@ -42,7 +43,7 @@ class PinInputField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
                   pin.isNotValid ?_mapErrorToMessage(context, pin.error) : errorMessage ?? " ",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: context.theme.textTheme.bodySmall,
                 ),
               ),
           ],

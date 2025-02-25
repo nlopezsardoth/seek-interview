@@ -1,19 +1,10 @@
+import 'package:auth_module/domain/entities/biometric_auth_parameters.dart';
+import 'package:auth_module/domain/entities/biometric_auth_response.dart';
 import 'package:shared_module/utils/typedefs.dart';
 
 abstract class BiometricAuthRepository {
-  ResultFuture<bool> biometricAuth({
-    required String iosLocalizedReason,
-    required String androidLocalizedReason,
-    required String androidSignInTitle,
-    required String androidBiometricHint,
-    String? iosCancelButton,
-    String? iosGoToSettingsButton,
-    String? iosGoToSettingsDescription,
-    String? iosLockOut,
-    String? androidCancelButton,
-    String? androidGoToSettingsButton,
-    String? androidGoToSettingsDescription,
-    String? androidBiometricNotRecognized,
+  ResultFuture<BioAuthResult> biometricAuth({
+    required BiometricAuthParams params,
   });
 
   ResultFuture<bool> biometricCanAuth();

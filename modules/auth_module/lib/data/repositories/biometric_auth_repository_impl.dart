@@ -1,3 +1,7 @@
+import 'package:auth_module/data/datasources/seek_biometrics_datasource.dart';
+import 'package:auth_module/data/mappers/auth_result_mapper.dart';
+import 'package:auth_module/domain/entities/biometric_auth_parameters.dart';
+import 'package:auth_module/domain/entities/biometric_auth_response.dart';
 import 'package:auth_module/domain/repositories/biometric_auth_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shared_module/errors/exceptions.dart';
@@ -5,24 +9,24 @@ import 'package:shared_module/errors/failures.dart';
 import 'package:shared_module/utils/typedefs.dart';
 
 class BiometricAuthRepositoryImpl implements BiometricAuthRepository {
+  final SeekBiometricsDatasource biometricDataSource;
+
+  BiometricAuthRepositoryImpl({required this.biometricDataSource});
+
   @override
-  ResultFuture<bool> biometricAuth({
-    required String iosLocalizedReason,
-    required String androidLocalizedReason,
-    required String androidSignInTitle,
-    required String androidBiometricHint,
-    String? iosCancelButton,
-    String? iosGoToSettingsButton,
-    String? iosGoToSettingsDescription,
-    String? iosLockOut,
-    String? androidCancelButton,
-    String? androidGoToSettingsButton,
-    String? androidGoToSettingsDescription,
-    String? androidBiometricNotRecognized,
+  ResultFuture<BioAuthResult> biometricAuth({
+    required BiometricAuthParams params,
   }) async {
     try {
-      return Left(LocalFailure(message: "FAill"));
-    } on LocalDatabaseException catch (e) {
+      final result = await biometricDataSource.authenticate(
+        title: params.title,
+        subtitle: params.subtitle,
+      );
+
+      final authResult = AuthResultMapper.fromAuthResultDetails(result);
+
+      return Right(authResult.result);
+    } on BiometricAuthException catch (e) {
       return Left(LocalFailure(message: e.message));
     }
   }
@@ -30,8 +34,20 @@ class BiometricAuthRepositoryImpl implements BiometricAuthRepository {
   @override
   ResultFuture<bool> biometricCanAuth() async {
     try {
-      return Left(LocalFailure(message: "FAill"));
-    } on LocalDatabaseException catch (e) {
+      // Check if the device supports biometrics
+      final supportsBiometrics =
+          await biometricDataSource.deviceSupportsBiometrics();
+      if (!supportsBiometrics) {
+        return Right(false);
+      }
+
+      // Check if there are any enrolled biometrics
+      final enrolledBiometrics =
+          await biometricDataSource.getEnrolledBiometrics();
+      final hasBiometrics = enrolledBiometrics.isNotEmpty;
+      
+      return Right(hasBiometrics);
+    } on BiometricAuthException catch (e) {
       return Left(LocalFailure(message: e.message));
     }
   }

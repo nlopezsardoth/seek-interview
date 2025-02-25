@@ -8,3 +8,9 @@ packages:
 scripts:
   analyze:
     exec: dart analyze .
+
+  pub_upgrade:
+    exec: flutter pub upgrade
+
+  clean_project:
+    run: find . -name pubspec.lock -delete && y | flutter pub cache clean && flutter pub get &&  dart pub global activate melos && melos bs

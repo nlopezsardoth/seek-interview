@@ -1,0 +1,10 @@
+{
+  "scan_qr_code_button_text": "Escanear QR",
+  "scanned_code_data_label": "Data del QR: ",
+  "scan_history_label": "Historial",
+  "no_scan_history_label": "Todavía no tienes QRs escaneados",
+  "list_tile_label": "Escaneado en: ",
+  "clear_history_label": "Limpiar historial",
+  "error_qr_modal_info_title": "Intentalo de nuevo",
+  "error_qr_modal_info_description": "Hubo un error escaneando tu QR."
+}

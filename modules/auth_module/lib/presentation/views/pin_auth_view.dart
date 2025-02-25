@@ -3,6 +3,7 @@ import 'package:auth_module/presentation/blocs/login/login_bloc.dart';
 import 'package:auth_module/presentation/widgets/pin_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_module/utils/extensions/context_extensions.dart';
 import 'package:shared_module/widgets/seek_button.dart';
 
 class PinAuthView extends StatelessWidget {
@@ -23,7 +24,7 @@ class PinAuthView extends StatelessWidget {
                 isNewPinFlow
                     ? ln10Auth!.login_new_pin_title
                     : ln10Auth!.login_pin_auth_title,
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: context.theme.textTheme.headlineSmall,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 25),

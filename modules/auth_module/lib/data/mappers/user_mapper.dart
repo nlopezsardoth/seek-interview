@@ -7,7 +7,6 @@ class UserMapper {
       id: user.id,
       pin: user.pin,
       isBiometricConfigured: user.isBiometricConfigured,
-      biometricID: user.biometricID,
     );
   }
 
@@ -16,7 +15,6 @@ class UserMapper {
       id: model.id,
       pin: model.pin,
       isBiometricConfigured: model.isBiometricConfigured,
-      biometricID: model.biometricID,
     );
   }
 }

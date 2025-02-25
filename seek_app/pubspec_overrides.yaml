@@ -1,4 +1,4 @@
-# melos_managed_dependency_overrides: auth_module,home_module,router_module,seek_secure_store,shared_module
+# melos_managed_dependency_overrides: auth_module,home_module,router_module,seek_secure_store,shared_module,seek_biometrics,seek_qr
 dependency_overrides:
   auth_module:
     path: ../modules/auth_module
@@ -6,6 +6,10 @@ dependency_overrides:
     path: ../modules/home_module
   router_module:
     path: ../modules/router_module
+  seek_biometrics:
+    path: ../packages/seek_biometrics
+  seek_qr:
+    path: ../packages/seek_qr
   seek_secure_store:
     path: ../packages/seek_secure_store
   shared_module:

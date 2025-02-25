@@ -10,7 +10,6 @@ class UserModel extends User {
     required super.id,
     required super.pin,
     super.isBiometricConfigured = false,
-    required super.biometricID,
   });
 
   /// Auto-generate these methods using json_serializable

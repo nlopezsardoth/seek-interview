@@ -1,5 +1,8 @@
 targets:
   $default:
+    sources:
+      exclude:
+        - example/**
     builders:
       pigeon_generator:
         options:
@@ -10,7 +13,8 @@ targets:
           swift:
             out: "ios/Classes"
           kotlin:
-            out: "android/src/main/kotlin/com/example/seek_biometrics"
+            out: "android/src/main/kotlin/com/example/seek_biometrics/pigeons"
+            package: com.example.seek_biometrics
 
 additional_public_assets:
   - pigeons/**

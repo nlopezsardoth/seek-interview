@@ -141,6 +141,12 @@ abstract class AuthLocalizations {
   /// **'El PIN no coincide, inténtalo nuevamente.'**
   String get login_confirm_pin_dont_match_message;
 
+  /// No description provided for @login_try_with_pin_button_label.
+  ///
+  /// In es, this message translates to:
+  /// **'Trata con PIN'**
+  String get login_try_with_pin_button_label;
+
   /// No description provided for @biometric_auth_reason_ios.
   ///
   /// In es, this message translates to:
@@ -164,6 +170,12 @@ abstract class AuthLocalizations {
   /// In es, this message translates to:
   /// **'Ingresa rápido y seguro a tu cuenta.'**
   String get biometric_auth_android_sign_in_title;
+
+  /// No description provided for @biometric_auth_try_again_button_label.
+  ///
+  /// In es, this message translates to:
+  /// **'Trata de nuevo'**
+  String get biometric_auth_try_again_button_label;
 
   /// No description provided for @biometric_auth_android_biometric_hint.
   ///

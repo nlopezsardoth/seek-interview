@@ -221,7 +221,7 @@ packages:
     source: hosted
     version: "6.2.1"
   home_module:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../modules/home_module"
       relative: true
@@ -442,6 +442,20 @@ packages:
       relative: true
     source: path
     version: "1.0.0+1"
+  seek_biometrics:
+    dependency: "direct overridden"
+    description:
+      path: "../packages/seek_biometrics"
+      relative: true
+    source: path
+    version: "0.0.1"
+  seek_qr:
+    dependency: "direct overridden"
+    description:
+      path: "../packages/seek_qr"
+      relative: true
+    source: path
+    version: "0.0.1"
   seek_secure_store:
     dependency: "direct overridden"
     description:

@@ -13,3 +13,12 @@ class LogInRequested extends AuthEvent {
   @override
   List<Object> get props => [user];
 }
+
+class UpdateUserState extends AuthEvent {
+  final User user;
+
+  UpdateUserState(this.user);
+
+  @override
+  List<Object> get props => [user];
+}

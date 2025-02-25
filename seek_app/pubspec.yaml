@@ -33,6 +33,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.0.0
+  home_module:
+    path: ../modules/home_module
   loader_overlay: ^5.0.0
   router_module:
     path: ../modules/router_module

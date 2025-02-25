@@ -1,6 +1,29 @@
 part of 'qr_bloc.dart';
 
-@immutable
-sealed class QrState {}
+class QrState extends Equatable{
+  const QrState({
+    this.qrScan,
+    this.history = const [],
+    this.errorMessage,
+  });
 
-final class QrInitial extends QrState {}
+  final QrScan? qrScan;
+  final List<QrScan> history;
+  final String? errorMessage;
+
+  QrState copyWith({
+    QrScan? qrScan,
+    List<QrScan>? history,
+    String? errorMessage,
+    bool resetError = false,
+  }) {
+    return QrState(
+      qrScan: qrScan ?? this.qrScan,
+      history: history ?? this.history,
+      errorMessage: resetError ? null : errorMessage ?? this.errorMessage,
+    );
+  }
+
+  @override
+  List<Object?> get props => [qrScan, history, errorMessage];
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_module/presentation/views/qr_view.dart';
 import 'package:router_module/router.dart';
 
 @RoutePage()
@@ -7,6 +8,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.blue, child: Text("Home screen"),);
+    return Scaffold(
+      body: QRScannerView(),
+    );
   }
 }

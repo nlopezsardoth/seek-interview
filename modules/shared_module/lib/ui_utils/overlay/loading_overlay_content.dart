@@ -16,14 +16,8 @@ class LoadingOverlayContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return IgnorePointer(
       ignoring: !displayOverlay,
-      child: Container(
-        // decoration: const BoxDecoration().copyWith(
-        //   color: SFThemes.theme.colorsFoundation.grey900
-        //       .withValues(alpha: overlayOpacity),
-        // ),
-        child: Center(
-          child: displayOverlay ? SeekLoader() : null,
-        ),
+      child: Center(
+        child: displayOverlay ? SeekLoader() : null,
       ),
     );
   }

@@ -11,7 +11,14 @@ sealed class LoginEvent extends Equatable {
 class LoginCheckStatus extends LoginEvent {}
 
 /// Attempt biometric login
-class LoginWithBiometrics extends LoginEvent {}
+class LoginWithBiometrics extends LoginEvent {
+  final BiometricAuthParams biometricParameters;
+
+  const LoginWithBiometrics(this.biometricParameters);
+
+  @override
+  List<Object> get props => [biometricParameters];
+}
 
 /// Attempt PIN login
 class LoginWithPin extends LoginEvent {
@@ -22,6 +29,9 @@ class LoginWithPin extends LoginEvent {
   @override
   List<Object> get props => [pinNotMatchErrorMessage];
 }
+
+/// Strat login with PIN flow
+class GoToLoginWithPin extends LoginEvent {}
 
 /// Set up a new PIN
 class SetupNewPin extends LoginEvent {}

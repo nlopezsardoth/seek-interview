@@ -4,11 +4,18 @@ class SeekTheme {
   final Color primaryColor;
   final Color secondaryColor;
   final Color alertColor;
+  final Color cardColor;
 
   SeekTheme({
     this.primaryColor = Colors.black,
     this.secondaryColor = Colors.white,
     this.alertColor = Colors.red,
+    this.cardColor = const Color.fromRGBO(
+      238,
+      238,
+      238,
+      1,
+    ), //Colors.grey.shade200
   });
 
   ThemeData getTheme() => ThemeData(
@@ -21,6 +28,8 @@ class SeekTheme {
     outlinedButtonTheme: _outlinedButtonTheme(),
     inputDecorationTheme: _inputDecorationTheme(),
     appBarTheme: _appBarTheme(),
+    cardTheme: _cardTheme(),
+    listTileTheme: _listTileTheme(),
   );
 
   SeekTheme copyWith({
@@ -58,6 +67,7 @@ class SeekTheme {
   OutlinedButtonThemeData _outlinedButtonTheme() {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        backgroundColor: secondaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         side: BorderSide(color: primaryColor, width: 2),
       ),
@@ -88,10 +98,28 @@ class SeekTheme {
       iconTheme: IconThemeData(color: primaryColor),
     );
   }
+
+  CardTheme _cardTheme() {
+    return CardTheme(
+      color: cardColor, // Background color
+      elevation: 0, // Elevation for depth effect
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15), // Rounded corners
+      ),
+      margin: const EdgeInsets.all(8), // Default margin
+    );
+  }
+
+  ListTileThemeData _listTileTheme() {
+    return ListTileThemeData(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+      tileColor: secondaryColor, // Background color
+      iconColor: primaryColor, // Default icon color
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20), // Rounded corners
+      ),
+    );
+  }
 }
 
 final SeekTheme lightTheme = SeekTheme();
-final SeekTheme darkTheme = SeekTheme().copyWith(
-  primaryColor: Colors.white,
-  secondaryColor: Colors.black,
-);

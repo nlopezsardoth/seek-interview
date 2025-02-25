@@ -1,10 +1,15 @@
 package com.example.seek_biometrics
 
-import android.app.Activity
+import SeekAuthApi
+import AuthResultDetails
+import AuthClassification
+
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricPrompt.PromptInfo
-import androidx.fragment.app.FragmentActivity;
+
+import android.app.Activity
+import androidx.fragment.app.FragmentActivity
 import androidx.core.content.ContextCompat
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding

@@ -24,8 +24,8 @@ class ErrorBottomSheetCubit extends Cubit<BottomSheetErrorType?> {
         BottomSheetErrorType(ErrorType.enableBiometricSettingsError, callback));
   }
 
-  Future<void> postBiometricUpdated(VoidCallback callback) async {
-    post(BottomSheetErrorType(ErrorType.updatedBiometricError, callback));
+  void postQrScannError(VoidCallback callback) {
+    post(BottomSheetErrorType(ErrorType.qrScannerError, callback));
   }
 
   void post(BottomSheetErrorType message) {

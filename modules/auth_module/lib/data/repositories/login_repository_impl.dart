@@ -1,14 +1,14 @@
-import 'package:auth_module/data/datasources/user_local_datasource.dart';
 import 'package:auth_module/data/mappers/user_mapper.dart';
 import 'package:auth_module/domain/entities/user.dart';
 import 'package:auth_module/domain/repositories/login_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shared_module/errors/exceptions.dart';
 import 'package:shared_module/errors/failures.dart';
+import 'package:shared_module/features/storage/data/datasources/seek_storage_datasource.dart';
 import 'package:shared_module/utils/typedefs.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
-  final UserLocalDatasource localDatasource;
+  final SeekStorageDatasource localDatasource;
 
   const LoginRepositoryImpl({required this.localDatasource});
 

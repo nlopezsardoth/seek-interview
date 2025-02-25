@@ -2,7 +2,6 @@
 // See also: https://pub.dev/packages/pigeon
 @file:Suppress("UNCHECKED_CAST", "ArrayInDataClass")
 
-package com.example.seek_qr.pigeons
 
 import android.util.Log
 import io.flutter.plugin.common.BasicMessageChannel
@@ -19,7 +18,7 @@ private fun wrapResult(result: Any?): List<Any?> {
 }
 
 private fun wrapError(exception: Throwable): List<Any?> {
-  return if (exception is QrscannerFlutterError) {
+  return if (exception is QrScannerFlutterError) {
     listOf(
       exception.code,
       exception.message,
@@ -40,7 +39,7 @@ private fun wrapError(exception: Throwable): List<Any?> {
  * @property message The error message.
  * @property details The error details. Must be a datatype supported by the api codec.
  */
-class QrscannerFlutterError (
+class QrScannerFlutterError (
   val code: String,
   override val message: String? = null,
   val details: Any? = null
@@ -68,7 +67,7 @@ data class QRScanResult (
     )
   }
 }
-private open class QrscannerPigeonCodec : StandardMessageCodec() {
+private open class QrScannerPigeonCodec : StandardMessageCodec() {
   override fun readValueOfType(type: Byte, buffer: ByteBuffer): Any? {
     return when (type) {
       129.toByte() -> {
@@ -99,7 +98,7 @@ interface QRScannerApi {
   companion object {
     /** The codec used by QRScannerApi. */
     val codec: MessageCodec<Any?> by lazy {
-      QrscannerPigeonCodec()
+      QrScannerPigeonCodec()
     }
     /** Sets up an instance of `QRScannerApi` to handle messages through the `binaryMessenger`. */
     @JvmOverloads

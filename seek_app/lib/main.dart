@@ -4,6 +4,9 @@ import 'package:auth_module/presentation/blocs/auth/auth_bloc.dart';
 import 'package:auth_module/presentation/blocs/login/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_module/core/home_locator.dart';
+import 'package:home_module/l10n/home_localizations.dart';
+import 'package:home_module/presentation/blocs/qr/qr_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:router_module/config/router_locator.dart';
 import 'package:router_module/router/app_router.dart';
@@ -26,6 +29,7 @@ Future<void> _initLocators() async {
   await initSharedLocator();
   await initRouterLocator();
   await initAuthLocator();
+  await initHomeLocator();
 }
 
 class _SeekApp extends StatelessWidget {
@@ -40,21 +44,24 @@ class _SeekApp extends StatelessWidget {
         BlocProvider<LoginBloc>(
           create: (_) => authLocator<LoginBloc>(),
         ),
+        BlocProvider<QrBloc>(
+          create: (_) => homeLocator<QrBloc>(),
+        ),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: _appName,
         theme: lightTheme.getTheme(),
-        darkTheme: darkTheme.getTheme(),
-        themeMode: ThemeMode.system,
         routerConfig: AppRouter().config(),
         localizationsDelegates: const [
           ...AuthLocalizations.localizationsDelegates,
           ...SharedLocalizations.localizationsDelegates,
+          ...HomeLocalizations.localizationsDelegates,
         ],
         supportedLocales: const [
           ...AuthLocalizations.supportedLocales,
           ...SharedLocalizations.supportedLocales,
+          ...HomeLocalizations.supportedLocales
         ],
         builder:
             (_, child) => GlobalLoaderOverlay(

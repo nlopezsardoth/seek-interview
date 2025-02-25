@@ -44,12 +44,14 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 24
+        targetSdkVersion 35
     }
 
     dependencies {
-        implementation ('com.google.android.gms:play-services-code-scanner:16.1.0')
-        implementation ("com.google.android.play:feature-delivery-ktx:2.1.0")
+        implementation 'androidx.activity:activity-ktx:1.8.0' // For ActivityResultLauncher
+        implementation 'androidx.fragment:fragment-ktx:1.6.1' // For FragmentActivity
+        implementation 'com.journeyapps:zxing-android-embedded:4.1.0' // For IntentIntegrator
         testImplementation("org.jetbrains.kotlin:kotlin-test")
         testImplementation("org.mockito:mockito-core:5.0.0")
     }
