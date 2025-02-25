@@ -6,7 +6,7 @@ platform :android do
       build_type: "Release")
       # build_android_app is a built-in fastlane action.
       release = firebase_app_distribution(
-        service_credentials_json_data: ENV['GOOGLE_APPLICATION_CREDENTIALS']
+        service_credentials_json_data: ENV['GOOGLE_APPLICATION_CREDENTIALS'],
         app: "1:1015820849617:android:ab5598680a5634882c90f07",
         groups: "seek-testers",
         release_notes: "App for seek interview",
