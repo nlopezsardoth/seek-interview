@@ -1,0 +1,4 @@
+def configFile = 'configGlobal.gradle'
+if (rootProject.file(configFile).exists()) {
+    apply from: configFile
+}
