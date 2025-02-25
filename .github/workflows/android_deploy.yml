@@ -43,6 +43,6 @@ jobs:
 
       - name: Run Fastlane for Android
         working-directory: seek_app/android
-        run: fastlane distribute android
+        run: bundle exec fastlane android distribute
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
