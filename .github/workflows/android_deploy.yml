@@ -16,16 +16,23 @@ jobs:
         with:
           distribution: "zulu"
           java-version: "11"
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
       - name: Install dependencies
         run: flutter pub get
-      - name: Set up Ruby
+
+      - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3" # Specify your ruby version here
+          ruby-version: 2.7.2
+      - name: Install ruby dependencies
+        run: |
+          cd seek_app/android
+          bundle update --bundler
+
       - name: Install Fastlane
         run: gem install fastlane
       - name: Install Fastlane Firebase App Distribution plugin
