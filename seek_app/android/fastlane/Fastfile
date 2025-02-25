@@ -1,5 +1,10 @@
 platform :android do
   desc "Seek app"
+  gradle(
+      task: 'assemble',
+      build_type: 'Release',
+      project_dir: 'seek_app/android/',
+  )
   lane :distribute do
       build_android_app(
       task: "assemble",
