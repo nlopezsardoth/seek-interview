@@ -12,7 +12,7 @@ platform :android do
         groups: "seek-testers",
         release_notes: "App for seek interview",
         android_artifact_type: "APK",
-        android_artifact_path: "seek_app/build/app/outputs/flutter-apk/app-debug.apk",
+        android_artifact_path: "seek_app/build/app/outputs/bundle/release/apk-release.aab,
       )
   end
 end
