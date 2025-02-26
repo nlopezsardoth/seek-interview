@@ -3,7 +3,7 @@ platform :android do
 
   lane :distribute do
       # Build the app bundle.
-      sh "flutter build appbundle --release -t lib/environments/main_prod.dart" 
+      sh "flutter build apk --release -t lib/environments/main_prod.dart" 
 
       # Upload to Firebase App Distribution
       release = firebase_app_distribution(
@@ -11,8 +11,8 @@ platform :android do
         app: "1:1015820849617:android:ab5598680a5634882c90f0",
         groups: "seek-testers",
         release_notes: "App for seek interview",
-        android_artifact_type: "AAB",
-        android_artifact_path: "../build/app/outputs/bundle/release/app-release.aab",
+        android_artifact_type: "APK",
+        android_artifact_path: "../uild/app/outputs/flutter-apk/app-release.apk",
       )
   end
 end
