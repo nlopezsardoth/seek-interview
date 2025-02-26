@@ -14,5 +14,11 @@ platform :android do
         android_artifact_type: "APK",
         android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
       )
+
+      # Deactivate all previous releases
+      sh "fastlane supply --json_key_path android/fastlane --track production --rollout 0"
+
+      # Upload and activate the new release
+      sh "fastlane supply --json_key_path android/fastlane --apk ../build/app/outputs/flutter-apk/app-release.apk --track production --rollout 100"
   end
 end

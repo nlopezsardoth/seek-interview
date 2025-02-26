@@ -36,7 +36,7 @@ jobs:
           bundle update --bundler
 
       - name: Install Fastlane
-        run: gem install fastlane -v 2.225.0
+        run: gem install fastlane
 
       - name: Install Fastlane Firebase App Distribution plugin
         working-directory: seek_app/android
