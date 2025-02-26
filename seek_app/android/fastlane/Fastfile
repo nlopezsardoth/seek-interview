@@ -2,8 +2,8 @@ platform :android do
   desc "Seek app"
 
   lane :distribute do
-      # Build the app bundle
-      sh "flutter build appbundle --release -t lib/environments/main_prod.dart"
+      # Build the app bundle.
+      sh "flutter build appbundle --release -t lib/environments/main_prod.dart" 
 
       # Upload to Firebase App Distribution
       release = firebase_app_distribution(
