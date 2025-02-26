@@ -11,8 +11,8 @@ platform :android do
         app: "1:1015820849617:android:ab5598680a5634882c90f07",
         groups: "seek-testers",
         release_notes: "App for seek interview",
-        android_artifact_type: "APK",
-        android_artifact_path: "build/app/outputs/bundle/release/app-release.aab",
+        android_artifact_type: "AAB",
+        android_artifact_path: "../build/app/outputs/bundle/release/app-release.aab",
       )
   end
 end
